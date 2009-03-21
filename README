@@ -28,3 +28,15 @@ Requirements
 * Python 2.5+ (likely works earlier)
 * pyparsing (sweet little DSL for creating parsers)
 * Django, if you want to use vdjango
+
+
+TODO:
+=====
+* Unit Tests
+* Egg
+* Update & Insert for:
+  * vdjango
+  * vsql
+* Simple args-to-function impl... 'vfunction'
+  * write a decorator for that, sexxxxxy
+* Clean up Python, since I've become more competent since inception. :)
