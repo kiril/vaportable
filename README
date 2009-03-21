@@ -1,0 +1,30 @@
+VaporTable
+===========
+
+VaporTable is a tiny framework for using a subset of SQL to access arbitrary Python code,
+in a controlled, secure, and decoupled way.  It's not as crazy as it sounds.  It gives
+a nice layer of simple-to-use abstraction into querying a system.  People know SQL, which
+makes it easy to learn.  Be able to change the representation of underlying data really
+easily, and leave the query interface intact.
+
+You could:
+* limit SQL that can be run against a given database by end-users
+* allow arbitrary SQL, but run 'explain' before each query is run to prevent performance
+  problems
+* build an SQL-like interface into an in-memory data structure
+
+Anyway, it is what you make it. :)
+
+
+
+A couple of implementations at this point, which demonstrate potential:
+
+1) vdjango.py - Using VQL to access Django models.  Not as backward as it sounds.
+2) vsql.py - Build models that translate VQL into SQL, but restrict and translate
+             access to columns, queryability, etc.
+
+Requirements
+============
+* Python 2.5+ (likely works earlier)
+* pyparsing (sweet little DSL for creating parsers)
+* Django, if you want to use vdjango
