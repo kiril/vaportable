@@ -83,7 +83,9 @@ class SimpleVaporView(VaporTable):
         sql = "SELECT %s FROM %s WHERE %s"
         tables = ", ".join( self.internal_tables )
         cols = ", ".join( [self.vqlsql_map[x] for x in parsed.columns] )
-        wheres = " AND ".join(["=".join((self.vqlsql_map[k],parsed.wheres[k])) for k in parsed.wheres.keys()])
-        sql = sql % ( cols, tables, wheres )
+        conditions = ["=".join((self.vqlsql_map[k],parsed.wheres[k])) for k in parsed.wheres.keys()]
+        conditions += ["=".join(pair) for pair in self.join_columns]
+        where_clause = " AND ".join(conditions)
+        sql = sql % ( cols, tables, where_clause )
         print "View SQL = %s" % sql
         pass
