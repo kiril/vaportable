@@ -52,16 +52,24 @@ class SimpleVaporView(VaporTable):
     joins on some related tables in the DB.
     """
     def __init__(self, internal_tables, external_name, join_columns, mappings):
+        """
+        internal_tables - the list of actual DB tables to join
+        external_name - the alias for this view
+        join_columns - list of pairs of qualified columns to use in joining
+        """
         VaporTable.__init__(self, external_name)
         self.internal_tables = [t.lower() for t in internal_tables]
         self.external_name = external_name.lower()
         self.join_columns = join_columns
         for k in mappings.keys():
             v = mappings[k]
-            assert k.find('.') > -1, "SVV internal mappings must be qualified, %s %s" % (k,v)
+            assert k.find('.')>0, "SVV internal mappings must be qualified, %s %s" % (k,v)
             assert k.split('.')[0] in internal_tables, "SVV mapping doesn't match a table %s %s" % ( internal_tables, mappings )
             self.vqlsql_map[v] = k
             self.sqlvql_map[k] = v
+        for pair in join_columns:
+            assert len(pair) == 2, "That's not a pair of columns! %s" % join_columns
+            assert pair[0].find('.')>0 and pair[1].find('.')>0, "mapping columns must be qualified, I'm not a genius %s" % pair
 
     def _preflight_query(self, vql, parsed):
         assert self.external_name == parsed.table_name, "SVV ExName wrong %s %s" % (self.external_name, parsed.table_name)
